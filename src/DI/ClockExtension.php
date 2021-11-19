@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of the Kdyby (http://www.kdyby.org)
@@ -20,27 +20,23 @@ use Nette\PhpGenerator\PhpLiteral;
 class ClockExtension extends \Nette\DI\CompilerExtension
 {
 
-	const STANDARD_PROVIDER = 'standard';
-	const REQUEST_PROVIDER = 'request';
-	const CURRENT_PROVIDER = 'current';
+	public const STANDARD_PROVIDER = 'standard';
+	public const REQUEST_PROVIDER = 'request';
+	public const CURRENT_PROVIDER = 'current';
 
-	/**
-	 * @var string[]
-	 */
-	public $defaults = [
+	/** @var string[] */
+	public array $defaults = [
 		'provider' => self::STANDARD_PROVIDER,
 	];
 
-	/**
-	 * @var string[]
-	 */
-	public static $providers = [
+	/** @var string[] */
+	public static array $providers = [
 		self::STANDARD_PROVIDER => ConstantProvider::class,
 		self::REQUEST_PROVIDER => ConstantProvider::class,
 		self::CURRENT_PROVIDER => CurrentProvider::class,
 	];
 
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$config = $this->getConfig($this->defaults);
 		$builder = $this->getContainerBuilder();
@@ -75,9 +71,9 @@ class ClockExtension extends \Nette\DI\CompilerExtension
 		}
 	}
 
-	public static function register(Configurator $configurator)
+	public static function register(Configurator $configurator): void
 	{
-		$configurator->onCompile[] = function ($config, Compiler $compiler) {
+		$configurator->onCompile[] = function ($config, Compiler $compiler): void {
 			$compiler->addExtension('clock', new ClockExtension());
 		};
 	}

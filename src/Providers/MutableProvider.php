@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of the Kdyby (http://www.kdyby.org)
@@ -15,7 +15,7 @@ use DateTimeImmutable;
 class MutableProvider extends \Kdyby\Clock\Providers\AbstractProvider
 {
 
-	public function changePrototype(DateTimeImmutable $prototype)
+	public function changePrototype(DateTimeImmutable $prototype): void
 	{
 		$this->prototype = $prototype;
 		$this->date = NULL;

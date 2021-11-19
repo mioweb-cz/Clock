@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of the Kdyby (http://www.kdyby.org)
@@ -13,24 +13,12 @@ namespace Kdyby\Clock;
 interface IDateTimeProvider
 {
 
-	/**
-	 * @return \DateTimeImmutable
-	 */
-	public function getDate();
+	public function getDate(): \DateTimeImmutable;
 
-	/**
-	 * @return \DateInterval
-	 */
-	public function getTime();
+	public function getTime(): \DateInterval;
 
-	/**
-	 * @return \DateTimeImmutable
-	 */
-	public function getDateTime();
+	public function getDateTime(): \DateTimeImmutable;
 
-	/**
-	 * @return \DateTimeZone
-	 */
-	public function getTimezone();
+	public function getTimezone(): \DateTimeZone;
 
 }

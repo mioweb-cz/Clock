@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of the Kdyby (http://www.kdyby.org)
@@ -10,9 +10,6 @@
 
 namespace Kdyby\Clock\Providers;
 
-use DateInterval;
-use DateTimeImmutable;
-
 /**
  * Base implementation for DateTime-based providers.
  */
@@ -21,27 +18,18 @@ abstract class AbstractProvider implements \Kdyby\Clock\IDateTimeProvider
 
 	use \Kdyby\StrictObjects\Scream;
 
-	/**
-	 * @var \DateTimeImmutable
-	 */
-	protected $prototype;
+	protected \DateTimeImmutable $prototype;
 
-	/**
-	 * Cached date immutable object (time 0:00:00)
-	 *
-	 * @var \DateTimeImmutable|NULL
-	 */
-	protected $date;
+	/** Cached date immutable object (time 0:00:00) */
+	protected ?\DateTimeImmutable $date;
 
-	public function __construct(DateTimeImmutable $prototype)
+	public function __construct(\DateTimeImmutable $prototype)
 	{
 		$this->prototype = $prototype;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDate()
+	/** {@inheritdoc} */
+	public function getDate(): \DateTimeImmutable
 	{
 		if ($this->date === NULL) {
 			$this->date = $this->prototype->setTime(0, 0, 0);
@@ -50,26 +38,20 @@ abstract class AbstractProvider implements \Kdyby\Clock\IDateTimeProvider
 		return $this->date;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getTime()
+	/** {@inheritdoc} */
+	public function getTime(): \DateInterval
 	{
-		return new DateInterval(sprintf('PT%dH%dM%dS', $this->prototype->format('G'), $this->prototype->format('i'), $this->prototype->format('s')));
+		return new \DateInterval(sprintf('PT%dH%dM%dS', $this->prototype->format('G'), $this->prototype->format('i'), $this->prototype->format('s')));
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDateTime()
+	/** {@inheritdoc} */
+	public function getDateTime(): \DateTimeImmutable
 	{
 		return $this->prototype;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getTimezone()
+	/** {@inheritdoc} */
+	public function getTimezone(): \DateTimeZone
 	{
 		return $this->prototype->getTimezone();
 	}

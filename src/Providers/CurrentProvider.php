@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of the Kdyby (http://www.kdyby.org)
@@ -10,46 +10,34 @@
 
 namespace Kdyby\Clock\Providers;
 
-use DateInterval;
-use DateTimeImmutable;
-use DateTimeZone;
-
 class CurrentProvider implements \Kdyby\Clock\IDateTimeProvider
 {
 
 	use \Kdyby\StrictObjects\Scream;
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDate()
+	/** {@inheritdoc} */
+	public function getDate(): \DateTimeImmutable
 	{
-		return $this->getDateTime()->setTime(0, 0, 0);
+		return $this->getDateTime()->setTime(0, 0);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getTime()
+	/** {@inheritdoc} */
+	public function getTime(): \DateInterval
 	{
 		$now = $this->getDateTime();
-		return new DateInterval(sprintf('PT%dH%dM%dS', $now->format('G'), $now->format('i'), $now->format('s')));
+		return new \DateInterval(sprintf('PT%dH%dM%dS', $now->format('G'), $now->format('i'), $now->format('s')));
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDateTime()
+	/** {@inheritdoc} */
+	public function getDateTime(): \DateTimeImmutable
 	{
-		return new DateTimeImmutable();
+		return new \DateTimeImmutable();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getTimezone()
+	/** {@inheritdoc} */
+	public function getTimezone(): \DateTimeZone
 	{
-		return new DateTimeZone(date_default_timezone_get());
+		return new \DateTimeZone(date_default_timezone_get());
 	}
 
 }
