@@ -21,7 +21,7 @@ abstract class AbstractProvider implements \Kdyby\Clock\IDateTimeProvider
 	protected \DateTimeImmutable $prototype;
 
 	/** Cached date immutable object (time 0:00:00) */
-	protected ?\DateTimeImmutable $date;
+	protected ?\DateTimeImmutable $date = null;
 
 	public function __construct(\DateTimeImmutable $prototype)
 	{
@@ -31,7 +31,7 @@ abstract class AbstractProvider implements \Kdyby\Clock\IDateTimeProvider
 	/** {@inheritdoc} */
 	public function getDate(): \DateTimeImmutable
 	{
-		if ($this->date === NULL) {
+		if ($this->date === null) {
 			$this->date = $this->prototype->setTime(0, 0, 0);
 		}
 
